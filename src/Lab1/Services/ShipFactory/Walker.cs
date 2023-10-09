@@ -23,7 +23,7 @@ public class Walker : ShipFactory
 
     public override ShellBase CreateShell()
     {
-        return new ShellClass1();
+        return new ShellClassFirst();
     }
 
     public override JumpEngineBase CreateJumpEngine()

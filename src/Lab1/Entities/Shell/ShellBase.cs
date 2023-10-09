@@ -1,3 +1,4 @@
+using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacle;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Shell;
@@ -6,6 +7,11 @@ public abstract class ShellBase
 {
     protected ShellBase(int maxHitPoints)
     {
+        if (maxHitPoints <= 0)
+        {
+            throw new ArgumentException("range must be positive", nameof(maxHitPoints));
+        }
+
         CurrentHitPoints = maxHitPoints;
     }
 
@@ -16,7 +22,7 @@ public abstract class ShellBase
     {
         if (obstacle is null)
         {
-            return;
+            throw new ArgumentNullException(nameof(obstacle));
         }
 
         if (obstacle is AntiMateria)

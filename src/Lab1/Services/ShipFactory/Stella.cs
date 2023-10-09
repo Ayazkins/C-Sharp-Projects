@@ -13,7 +13,7 @@ public class Stella : ShipFactory
 
     public override DeflectorBase CreateDeflector(bool add = false)
     {
-        return new DeflectorClass1();
+        return new DeflectorClassFirst();
     }
 
     public override EngineBase CreateEngine()
@@ -23,7 +23,7 @@ public class Stella : ShipFactory
 
     public override ShellBase CreateShell()
     {
-        return new ShellClass1();
+        return new ShellClassFirst();
     }
 
     public override JumpEngineBase CreateJumpEngine()

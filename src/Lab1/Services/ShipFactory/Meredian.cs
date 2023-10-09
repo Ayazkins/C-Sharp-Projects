@@ -13,7 +13,7 @@ public class Meredian : ShipFactory
 
     public override DeflectorBase CreateDeflector(bool add = false)
     {
-        return new DeflectorClass2();
+        return new DeflectorClassSecond();
     }
 
     public override EngineBase CreateEngine()
@@ -23,7 +23,7 @@ public class Meredian : ShipFactory
 
     public override ShellBase CreateShell()
     {
-        return new ShellClass2();
+        return new ShellClassSecond();
     }
 
     public override JumpEngineBase CreateJumpEngine()

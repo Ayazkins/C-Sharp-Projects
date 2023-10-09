@@ -13,7 +13,7 @@ public class Vaklas : ShipFactory
 
     public override DeflectorBase CreateDeflector(bool add = false)
     {
-        return new DeflectorClass1(add);
+        return new DeflectorClassFirst(add);
     }
 
     public override EngineBase CreateEngine()
@@ -28,7 +28,7 @@ public class Vaklas : ShipFactory
 
     public override ShellBase CreateShell()
     {
-        return new ShellClass2();
+        return new ShellClassSecond();
     }
 
     public override string GiveName()

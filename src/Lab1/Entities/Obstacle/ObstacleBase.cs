@@ -1,10 +1,17 @@
+using System;
+
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacle;
 
 public abstract class ObstacleBase
 {
-    protected ObstacleBase(int damage)
+    protected ObstacleBase(int damage, int amount)
     {
-        Damage = damage;
+        if (damage < 0)
+        {
+            throw new ArgumentException("damage must not be >= 0", nameof(damage));
+        }
+
+        Damage = damage * amount;
     }
 
     public int Damage { get; protected set; }

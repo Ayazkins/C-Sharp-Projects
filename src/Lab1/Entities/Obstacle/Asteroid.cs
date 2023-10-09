@@ -4,8 +4,8 @@ public class Asteroid : ObstacleBase
 {
     private const int MaxDamage = 15;
 
-    public Asteroid()
-        : base(MaxDamage)
+    public Asteroid(int amount)
+        : base(MaxDamage, amount)
     {
     }
 }

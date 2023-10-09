@@ -5,9 +5,9 @@ using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ship;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Services.Journey;
 
-public class ChooseBest
+public class ChooseBest : IChooseBest
 {
-    public string Choose(IList<ShipBase> ships, Route currentRoute)
+    public string Choose(IEnumerable<ShipBase> ships, Route currentRoute)
     {
         if (ships == null)
         {
@@ -15,23 +15,16 @@ public class ChooseBest
         }
 
         var curBest = new Results();
-        for (int i = 0; i < ships.Count; ++i)
+        foreach (ShipBase ship in ships)
         {
             var result = new Results();
             var shipRouteChecker = new ShipRouteChecker(result);
-            shipRouteChecker.Go(ships[i], currentRoute);
+            shipRouteChecker.Go(ship, currentRoute);
             if (result.Success)
             {
-                if (!curBest.Success)
+                if (!curBest.Success | (curBest.Success && result.FuelAmount < curBest.FuelAmount))
                 {
                     curBest = result;
-                }
-                else
-                {
-                    if (result.FuelAmount < curBest.FuelAmount)
-                    {
-                        curBest = result;
-                    }
                 }
             }
         }

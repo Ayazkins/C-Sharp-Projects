@@ -13,7 +13,7 @@ public class Avgur : ShipFactory
 
     public override DeflectorBase CreateDeflector(bool add = false)
     {
-        return new DeflectorClass3();
+        return new DeflectorClassThird();
     }
 
     public override EngineBase CreateEngine()
@@ -23,7 +23,7 @@ public class Avgur : ShipFactory
 
     public override ShellBase CreateShell()
     {
-        return new ShellClass3();
+        return new ShellClassThird();
     }
 
     public override JumpEngineBase CreateJumpEngine()

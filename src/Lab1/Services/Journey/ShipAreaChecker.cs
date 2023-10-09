@@ -4,7 +4,7 @@ using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ship;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Services.Journey;
 
-public class ShipAreaChecker
+public class ShipAreaChecker : IShipAreaChecker
 {
     private const int SpecialFuelTimes = 3;
 
@@ -13,7 +13,7 @@ public class ShipAreaChecker
         NewResults = result;
     }
 
-    public Results NewResults { get; set; }
+    protected Results NewResults { get; private set; }
 
     public void GoArea(ShipBase ship, AreaBase area)
     {
@@ -28,28 +28,24 @@ public class ShipAreaChecker
         }
 
         NewResults.Name = ship.Type;
-        ship.TakeDamage(area.Obstacle);
+        ship.TakeDamage(area.Obstacles);
         if (area is NebulaeDensity)
         {
             NewResults.Lost = !ship.JumpEngine.CanPass(area);
-            if (NewResults.Lost)
+            if (!NewResults.Lost)
             {
-                return;
+                NewResults.FuelAmount += ship.JumpEngine.FuelCount(area) * SpecialFuelTimes;
+                NewResults.TimeAmount += ship.JumpEngine.TimeCount(area);
             }
-
-            NewResults.FuelAmount += ship.JumpEngine.FuelCount(area) * SpecialFuelTimes;
-            NewResults.TimeAmount += ship.JumpEngine.TimeCount(area);
         }
         else
         {
             NewResults.Lost = !ship.Engine.CanPass(area);
-            if (NewResults.Lost)
+            if (!NewResults.Lost)
             {
-                return;
+                NewResults.FuelAmount += ship.Engine.FuelCount(area);
+                NewResults.TimeAmount += ship.Engine.TimeCount(area);
             }
-
-            NewResults.FuelAmount += ship.Engine.FuelCount(area);
-            NewResults.TimeAmount += ship.Engine.TimeCount(area);
         }
 
         NewResults.IsShipDied = ship.IsShipDead;

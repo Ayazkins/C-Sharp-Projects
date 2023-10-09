@@ -4,8 +4,8 @@ public class AntiMateria : ObstacleBase
 {
     private const int MaxDamage = 1;
 
-    public AntiMateria()
-        : base(MaxDamage)
+    public AntiMateria(int amount)
+        : base(MaxDamage, amount)
     {
     }
 }

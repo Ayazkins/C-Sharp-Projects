@@ -4,12 +4,8 @@ public class CosmoWhale : ObstacleBase
 {
     private const int MaxDamage = 500;
 
-    public CosmoWhale(int population = 1)
-        : base(MaxDamage)
+    public CosmoWhale(int population)
+        : base(MaxDamage, population)
     {
-        Population = population;
-        this.Damage *= population;
     }
-
-    public int Population { get; private set; }
 }

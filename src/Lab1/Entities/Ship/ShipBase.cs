@@ -25,15 +25,15 @@ public class ShipBase
         Type = factory.GiveName();
     }
 
-    public EngineBase Engine { get; private set; }
-    public JumpEngineBase JumpEngine { get; private set; }
-    public ShellBase Shell { get; private set; }
-    public DeflectorBase Deflector { get; private set; }
-    public string Type { get; private set; }
-    public bool AntiN { get; private set; }
+    public EngineBase Engine { get; }
+    public JumpEngineBase JumpEngine { get; }
+    public ShellBase Shell { get; }
+    public DeflectorBase Deflector { get; }
+    public string Type { get; }
     public bool IsCrewDead { get; private set; }
 
     public bool IsShipDead => !Shell.IsAlive;
+    private bool AntiN { get; }
 
     public void TakeDamage(ObstacleBase obstacle)
     {

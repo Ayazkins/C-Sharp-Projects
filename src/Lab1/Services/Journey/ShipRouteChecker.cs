@@ -5,12 +5,14 @@ using Itmo.ObjectOrientedProgramming.Lab1.Entities.Ship;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Services.Journey;
 
-public class ShipRouteChecker : ShipAreaChecker
+public class ShipRouteChecker : IShipRouteChecker
 {
     public ShipRouteChecker(Results result)
-        : base(result)
     {
+        Result = result;
     }
+
+    private Results Result { get; }
 
     public void Go(ShipBase ship, Route route)
     {
@@ -24,10 +26,11 @@ public class ShipRouteChecker : ShipAreaChecker
             throw new ArgumentNullException(nameof(route));
         }
 
+        var shipAreaChecker = new ShipAreaChecker(Result);
         foreach (AreaBase t in route.Areas)
         {
-            GoArea(ship, t);
-            if (NewResults.Success)
+            shipAreaChecker.GoArea(ship, t);
+            if (Result.Success)
             {
                 return;
             }

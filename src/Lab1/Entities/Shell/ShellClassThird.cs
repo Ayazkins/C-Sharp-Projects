@@ -1,10 +1,10 @@
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Shell;
 
-public class ShellClass3 : ShellBase
+public class ShellClassThird : ShellBase
 {
     private const int MaxHitPoints = 250;
 
-    public ShellClass3()
+    public ShellClassThird()
         : base(MaxHitPoints)
     {
     }

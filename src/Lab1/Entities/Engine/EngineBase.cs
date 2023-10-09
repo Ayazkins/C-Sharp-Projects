@@ -7,13 +7,23 @@ public abstract class EngineBase
 {
     protected EngineBase(int speed, int fuelConsumption)
     {
+        if (speed <= 0)
+        {
+            throw new ArgumentException("speed must be positive", nameof(speed));
+        }
+
+        if (fuelConsumption <= 0)
+        {
+            throw new ArgumentException("fuelConsumption must be positive", nameof(fuelConsumption));
+        }
+
         Speed = speed;
         FuelConsumption = fuelConsumption;
     }
 
-    public int Speed { get; private set; }
+    public int Speed { get; }
 
-    public int FuelConsumption { get; private set; }
+    public int FuelConsumption { get; }
 
     public abstract bool CanPass(AreaBase area);
 

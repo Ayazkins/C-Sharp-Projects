@@ -30,9 +30,10 @@ public class Tests
         list.Add(nebulaeDensity);
         var route = new Route(list);
         var test = new ShipRouteChecker(result);
+
         test.Go(walker, route);
+
         Assert.False(result.Success);
-        Assert.True(!result.Success);
         Assert.True(result.Lost);
         _outputHelper.WriteLine(result.ShowResults());
 
@@ -41,8 +42,8 @@ public class Tests
         var test2 = new ShipRouteChecker(result2);
 
         test2.Go(avgur, route);
+
         Assert.False(result2.Success);
-        Assert.True(!result2.Success);
         Assert.True(result2.Lost);
         _outputHelper.WriteLine(result2.ShowResults());
     }
@@ -53,28 +54,30 @@ public class Tests
     {
         IList<AreaBase> list = new List<AreaBase>();
         var ship = new ShipBase(new Vaklas());
-        var obstacle = new AntiMateria();
+        var obstacle = new AntiMateria(1);
         var cosmos = new NebulaeDensity(i, obstacle);
         var result = new Results();
         var test = new ShipRouteChecker(result);
         list.Add(cosmos);
+
         test.Go(ship, new Route(list));
         _outputHelper.WriteLine(result.ShowResults());
+
         Assert.False(result.Success);
-        Assert.True(!result.Success);
         Assert.True(result.IsCrewDied);
 
         IList<AreaBase> list2 = new List<AreaBase>();
         var ship2 = new ShipBase(new Vaklas(), true);
-        var obstacle2 = new AntiMateria();
+        var obstacle2 = new AntiMateria(1);
         var cosmos2 = new NebulaeDensity(i, obstacle2);
         list2.Add(cosmos2);
         var result2 = new Results();
         var test2 = new ShipRouteChecker(result2);
+
         test2.Go(ship2, new Route(list2));
         _outputHelper.WriteLine(result2.ShowResults());
+
         Assert.True(result2.Success);
-        Assert.False(!result2.Success);
         Assert.False(result2.IsCrewDied);
     }
 
@@ -93,7 +96,8 @@ public class Tests
 
         test.Go(vaklas, route);
         _outputHelper.WriteLine(result.ShowResults());
-        Assert.True(!result.Success);
+
+        Assert.False(result.Success);
         Assert.True(result.IsShipDied);
     }
 
@@ -111,7 +115,8 @@ public class Tests
         var test = new ShipRouteChecker(result);
 
         test.Go(avgur, route);
-        Assert.True(avgur.Deflector.CurrentHitPoints == 0);
+
+        Assert.Equal(0, avgur.Deflector.CurrentHitPoints);
         Assert.True(result.Success);
         _outputHelper.WriteLine(result.ShowResults());
     }
@@ -130,6 +135,7 @@ public class Tests
         var test = new ShipRouteChecker(result);
 
         test.Go(meredian, route);
+
         Assert.True(meredian.Deflector.CurrentHitPoints > 0);
         Assert.True(result.Success);
         _outputHelper.WriteLine(result.ShowResults());
@@ -147,8 +153,11 @@ public class Tests
         IList<ShipBase> ships = new List<ShipBase>();
         ships.Add(vaklas);
         ships.Add(walker);
+
         var test = new ChooseBest();
-        Assert.True(test.Choose(ships, route) == "Walker");
+        string output = test.Choose(ships, route);
+
+        Assert.Equal("Walker", output);
     }
 
     [Fact]
@@ -162,8 +171,11 @@ public class Tests
         IList<ShipBase> ships = new List<ShipBase>();
         ships.Add(avgur);
         ships.Add(stella);
+
         var test = new ChooseBest();
-        Assert.True(test.Choose(ships, route) == "Stella");
+        string output = test.Choose(ships, route);
+
+        Assert.Equal("Stella", output);
     }
 
     [Fact]
@@ -177,23 +189,28 @@ public class Tests
         IList<ShipBase> ships = new List<ShipBase>();
         ships.Add(walker);
         ships.Add(vaklas);
+
         var test = new ChooseBest();
-        Assert.True(test.Choose(ships, route) == "Vaklas");
+        string output = test.Choose(ships, route);
+
+        Assert.Equal("Vaklas", output);
     }
 
     [Fact]
     public void Avgur()
     {
         IList<AreaBase> list = new List<AreaBase>();
-        list.Add(new NebulaN(1000, new CosmoWhale()));
-        list.Add(new Cosmos(500, new Meteor()));
+        list.Add(new NebulaN(1000, new CosmoWhale(1)));
+        list.Add(new Cosmos(500, new Meteor(1)));
         var route = new Route(list);
         var result = new Results();
         var avgur = new ShipBase(new Avgur());
         var test = new ShipRouteChecker(result);
+
         test.Go(avgur, route);
+
         Assert.True(result.Success);
-        Assert.True(avgur.Deflector.CurrentHitPoints == 0);
+        Assert.Equal(0, avgur.Deflector.CurrentHitPoints);
         Assert.True(avgur.Shell.CurrentHitPoints > 0);
     }
 }

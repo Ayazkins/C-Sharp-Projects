@@ -4,8 +4,8 @@ public class Meteor : ObstacleBase
 {
     private const int MaxDamage = 50;
 
-    public Meteor()
-        : base(MaxDamage)
+    public Meteor(int amount)
+        : base(MaxDamage, amount)
     {
     }
 }
