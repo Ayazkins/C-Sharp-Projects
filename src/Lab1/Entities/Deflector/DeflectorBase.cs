@@ -1,5 +1,5 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacle;
+using Itmo.ObjectOrientedProgramming.Lab1.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Deflector;
 
@@ -9,7 +9,7 @@ public abstract class DeflectorBase
     {
         if (maxHitPoints < 0)
         {
-            throw new ArgumentException("HitPoints must be positive", nameof(maxHitPoints));
+            throw new NegativeValueException(nameof(maxHitPoints));
         }
 
         CurrentHitPoints = maxHitPoints;

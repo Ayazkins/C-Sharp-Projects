@@ -60,12 +60,6 @@ public class Tests
         var test = new ShipRouteChecker(result);
         list.Add(cosmos);
 
-        test.Go(ship, new Route(list));
-        _outputHelper.WriteLine(result.ShowResults());
-
-        Assert.False(result.Success);
-        Assert.True(result.IsCrewDied);
-
         IList<AreaBase> list2 = new List<AreaBase>();
         var ship2 = new ShipBase(new Vaklas(), true);
         var obstacle2 = new AntiMateria(1);
@@ -74,11 +68,16 @@ public class Tests
         var result2 = new Results();
         var test2 = new ShipRouteChecker(result2);
 
-        test2.Go(ship2, new Route(list2));
-        _outputHelper.WriteLine(result2.ShowResults());
+        test.Go(ship, new Route(list));
 
-        Assert.True(result2.Success);
-        Assert.False(result2.IsCrewDied);
+        test2.Go(ship2, new Route(list2));
+
+        Assert.Equal(true, result2.Success);
+        Assert.Equal(false, result2.IsCrewDied);
+
+        
+        Assert.Equal(false, result.Success);
+        Assert.Equal(true, result.IsCrewDied);
     }
 
     [Theory]
@@ -97,8 +96,8 @@ public class Tests
         test.Go(vaklas, route);
         _outputHelper.WriteLine(result.ShowResults());
 
-        Assert.False(result.Success);
-        Assert.True(result.IsShipDied);
+        Assert.Equal(false, result.Success);
+        Assert.Equal(true, result.IsShipDied);
     }
 
     [Theory]
@@ -117,7 +116,7 @@ public class Tests
         test.Go(avgur, route);
 
         Assert.Equal(0, avgur.Deflector.CurrentHitPoints);
-        Assert.True(result.Success);
+        Assert.Equal(true, result.Success);
         _outputHelper.WriteLine(result.ShowResults());
     }
 
@@ -136,8 +135,8 @@ public class Tests
 
         test.Go(meredian, route);
 
-        Assert.True(meredian.Deflector.CurrentHitPoints > 0);
-        Assert.True(result.Success);
+        Assert.Equal(true, meredian.Deflector.CurrentHitPoints > 0);
+        Assert.Equal(true, result.Success);
         _outputHelper.WriteLine(result.ShowResults());
     }
 
@@ -209,8 +208,8 @@ public class Tests
 
         test.Go(avgur, route);
 
-        Assert.True(result.Success);
+        Assert.Equal(true, result.Success);
         Assert.Equal(0, avgur.Deflector.CurrentHitPoints);
-        Assert.True(avgur.Shell.CurrentHitPoints > 0);
+        Assert.Equal(true, avgur.Shell.CurrentHitPoints > 0);
     }
 }

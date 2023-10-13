@@ -1,5 +1,6 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Area;
+using Itmo.ObjectOrientedProgramming.Lab1.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Engine;
 
@@ -9,12 +10,12 @@ public abstract class EngineBase
     {
         if (speed <= 0)
         {
-            throw new ArgumentException("speed must be positive", nameof(speed));
+            throw new NegativeValueException(nameof(speed));
         }
 
         if (fuelConsumption <= 0)
         {
-            throw new ArgumentException("fuelConsumption must be positive", nameof(fuelConsumption));
+            throw new NegativeValueException(nameof(fuelConsumption));
         }
 
         Speed = speed;

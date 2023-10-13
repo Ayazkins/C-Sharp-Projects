@@ -1,4 +1,4 @@
-using System;
+using Itmo.ObjectOrientedProgramming.Lab1.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacle;
 
@@ -8,7 +8,7 @@ public abstract class ObstacleBase
     {
         if (damage < 0)
         {
-            throw new ArgumentException("damage must not be >= 0", nameof(damage));
+            throw new NegativeValueException(nameof(damage));
         }
 
         Damage = damage * amount;

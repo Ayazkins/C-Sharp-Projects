@@ -13,7 +13,7 @@ public class ShipAreaChecker : IShipAreaChecker
         NewResults = result;
     }
 
-    protected Results NewResults { get; private set; }
+    private Results NewResults { get; }
 
     public void GoArea(ShipBase ship, AreaBase area)
     {

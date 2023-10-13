@@ -1,5 +1,6 @@
 using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacle;
+using Itmo.ObjectOrientedProgramming.Lab1.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Shell;
 
@@ -9,7 +10,7 @@ public abstract class ShellBase
     {
         if (maxHitPoints <= 0)
         {
-            throw new ArgumentException("range must be positive", nameof(maxHitPoints));
+            throw new NegativeValueException(nameof(maxHitPoints));
         }
 
         CurrentHitPoints = maxHitPoints;

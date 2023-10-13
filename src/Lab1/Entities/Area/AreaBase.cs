@@ -1,5 +1,5 @@
-using System;
 using Itmo.ObjectOrientedProgramming.Lab1.Entities.Obstacle;
+using Itmo.ObjectOrientedProgramming.Lab1.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Entities.Area;
 
@@ -9,7 +9,7 @@ public abstract class AreaBase
     {
         if (range <= 0)
         {
-            throw new ArgumentException("range must be positive", nameof(range));
+            throw new NegativeValueException(nameof(range));
         }
 
         Range = range;

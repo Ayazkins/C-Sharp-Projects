@@ -30,7 +30,7 @@ public class ShipRouteChecker : IShipRouteChecker
         foreach (AreaBase t in route.Areas)
         {
             shipAreaChecker.GoArea(ship, t);
-            if (Result.Success)
+            if (!Result.Success)
             {
                 return;
             }
