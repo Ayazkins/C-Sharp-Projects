@@ -21,15 +21,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Tests;
 public class Tests
 {
     private readonly ITestOutputHelper _outputHelper;
-    private readonly BaseRepository<Cpu> _cpuStorage = new BaseRepository<Cpu>();
-    private readonly BaseRepository<Motherboard> _motherboardStorage = new BaseRepository<Motherboard>();
-    private readonly BaseRepository<Videocard> _videocardStorage = new BaseRepository<Videocard>();
-    private readonly BaseRepository<Ram> _ramStorage = new BaseRepository<Ram>();
-    private readonly BaseRepository<ComputerCase> _caseStorage = new BaseRepository<ComputerCase>();
-    private readonly BaseRepository<Hdd> _diskStorage = new BaseRepository<Hdd>();
-    private readonly BaseRepository<Cooler> _coolerStorage = new BaseRepository<Cooler>();
-    private readonly BaseRepository<PowerUnit> _powerUnitStorage = new BaseRepository<PowerUnit>();
-    private readonly BaseRepository<Computer> _computerStorage = new BaseRepository<Computer>();
+    private readonly Repository<Cpu> _cpuStorage = new Repository<Cpu>();
+    private readonly Repository<Motherboard> _motherboardStorage = new Repository<Motherboard>();
+    private readonly Repository<Videocard> _videocardStorage = new Repository<Videocard>();
+    private readonly Repository<Ram> _ramStorage = new Repository<Ram>();
+    private readonly Repository<ComputerCase> _caseStorage = new Repository<ComputerCase>();
+    private readonly Repository<Hdd> _diskStorage = new Repository<Hdd>();
+    private readonly Repository<Cooler> _coolerStorage = new Repository<Cooler>();
+    private readonly Repository<PowerUnit> _powerUnitStorage = new Repository<PowerUnit>();
+    private readonly Repository<Computer> _computerStorage = new Repository<Computer>();
 
     public Tests(ITestOutputHelper outputHelper)
     {
