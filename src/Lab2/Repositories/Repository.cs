@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Repositories;
 
-public class Repository<T>
+public class Repository<T> : IRepository<T>
     where T : DetailBase
 {
     private readonly Dictionary<string, T> _dictionary;
@@ -25,7 +25,14 @@ public class Repository<T>
             throw new ArgumentNullException(nameof(detail));
         }
 
-        _dictionary.Add(detail.Name, detail);
+        try
+        {
+            _dictionary.Add(detail.Name, detail);
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 
     public T GetDetail(string name)

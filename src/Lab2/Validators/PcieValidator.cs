@@ -9,7 +9,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardFolder;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
-public class PcieValidators : IValidators
+public class PcieValidator : IValidator
 {
     private readonly string _videoCardFault = "No pcie for graphic gard\n";
     private readonly string _wifiFault = "No pcie for wifi\n";

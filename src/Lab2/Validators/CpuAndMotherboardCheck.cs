@@ -5,7 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardFolder;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
-public class CpuAndMotherboardCheck : IValidators
+public class CpuAndMotherboardCheck : IValidator
 {
     private const string BiosFault = "Bios doesn't support cpu\n";
     private const string SocketFault = "Different cpu and motherboard sockets\n";

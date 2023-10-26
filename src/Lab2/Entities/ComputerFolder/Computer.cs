@@ -6,6 +6,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardFolder;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.PowerUnitFolder;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.RAMFolder;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardFolder;
+using Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
 
@@ -46,9 +47,9 @@ public class Computer : DetailBase
 
     public IReadOnlyCollection<Ram> Rams { get; }
 
-    public ComputerBuilder Direct()
+    public ComputerBuilder Direct(IValidator validator)
     {
-        ComputerBuilder computerBuilder = new ComputerBuilder()
+        ComputerBuilder computerBuilder = new ComputerBuilder(validator)
             .SetName(Name)
             .SetVideocard(Videocard)
             .SetCase(ComputerCase)

@@ -7,6 +7,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardFolder;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.PowerUnitFolder;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.RAMFolder;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardFolder;
+using Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
 
@@ -22,6 +23,12 @@ public class ComputerBuilder
     private Cooler? _cooler;
     private WiFi? _wiFi;
     private IReadOnlyCollection<Ram>? _rams;
+    private IValidator _validator;
+
+    public ComputerBuilder(IValidator validator)
+    {
+        _validator = validator;
+    }
 
     public ComputerBuilder SetName(string? name)
     {
@@ -83,9 +90,9 @@ public class ComputerBuilder
         return this;
     }
 
-    public Computer Build()
+    public PcBuildResult Build()
     {
-        return new Computer(
+        var computer = new Computer(
             _name ?? throw new ArgumentNullException(nameof(_name)),
             _motherboard ?? throw new ArgumentNullException(nameof(_name)),
             _videocard,
@@ -96,5 +103,12 @@ public class ComputerBuilder
             _wiFi,
             _rams ?? throw new ArgumentNullException(nameof(_rams)),
             _computerCase ?? throw new ArgumentNullException(nameof(_computerCase)));
+        ValidatorResult validatorResult = _validator.Validate(computer);
+        if (validatorResult is ValidatorResult.Fault)
+        {
+            return new PcBuildResult(null, validatorResult);
+        }
+
+        return new PcBuildResult(computer, validatorResult);
     }
 }

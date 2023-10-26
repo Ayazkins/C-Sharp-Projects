@@ -3,15 +3,15 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
-public class ComputerValidator : IValidators
+public class ComputerValidator : IValidator
 {
-    private IReadOnlyCollection<IValidators> _validators;
+    private IReadOnlyCollection<IValidator> _validators;
 
     public ComputerValidator()
     {
-        _validators = new List<IValidators>()
+        _validators = new List<IValidator>()
         {
-            new PcieValidators(),
+            new PcieValidator(),
             new ComputerCaseValidator(),
             new CpuAndVideocard(),
             new WiFiValidator(),
@@ -57,7 +57,7 @@ public class ComputerValidator : IValidators
 
     private void CollectComments(Computer computer)
     {
-        foreach (IValidators validator in _validators)
+        foreach (IValidator validator in _validators)
         {
             ValidatorResult validatorResult = validator.Validate(computer);
             if (validatorResult is ValidatorResult.Fault)

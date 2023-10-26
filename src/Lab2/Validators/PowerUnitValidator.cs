@@ -5,7 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.RAMFolder;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
-public class PowerUnitValidator : IValidators
+public class PowerUnitValidator : IValidator
 {
     private readonly string _notEnoughEnergy = "May be not enough energy\n";
 

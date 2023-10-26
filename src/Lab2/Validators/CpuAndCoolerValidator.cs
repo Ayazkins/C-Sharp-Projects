@@ -5,7 +5,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.SocketFolder;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
-public class CpuAndCoolerValidator : IValidators
+public class CpuAndCoolerValidator : IValidator
 {
     private readonly string _faultMessage = "Cpu and cooler have different sockets\n";
     private readonly string _noGuaranteeMessage = "Tdp not enough\n";

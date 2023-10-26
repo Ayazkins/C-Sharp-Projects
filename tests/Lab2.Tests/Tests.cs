@@ -20,16 +20,8 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Tests;
 
 public class Tests
 {
+    private readonly RepositoryOfEverything _repository = new RepositoryOfEverything();
     private readonly ITestOutputHelper _outputHelper;
-    private readonly Repository<Cpu> _cpuStorage = new Repository<Cpu>();
-    private readonly Repository<Motherboard> _motherboardStorage = new Repository<Motherboard>();
-    private readonly Repository<Videocard> _videocardStorage = new Repository<Videocard>();
-    private readonly Repository<Ram> _ramStorage = new Repository<Ram>();
-    private readonly Repository<ComputerCase> _caseStorage = new Repository<ComputerCase>();
-    private readonly Repository<Hdd> _diskStorage = new Repository<Hdd>();
-    private readonly Repository<Cooler> _coolerStorage = new Repository<Cooler>();
-    private readonly Repository<PowerUnit> _powerUnitStorage = new Repository<PowerUnit>();
-    private readonly Repository<Computer> _computerStorage = new Repository<Computer>();
 
     public Tests(ITestOutputHelper outputHelper)
     {
@@ -48,8 +40,8 @@ public class Tests
             .SetName("AMD Ryzen")
             .SetSocket(new Socket("AM4"))
             .Build();
-        _cpuStorage.Add(cpu);
-        _cpuStorage.Add(diffCpu);
+        _repository.CpuStorage.Add(cpu);
+        _repository.CpuStorage.Add(diffCpu);
 
         var motherBoard = new MotherboardBuilder();
         var list = new List<Cpu>() { cpu };
@@ -65,7 +57,7 @@ public class Tests
             .SetDDRVersion(new Ddr("DDR4"))
             .SetPCIE(listOfPcie)
             .Build();
-        _motherboardStorage.Add(motherboard);
+        _repository.MotherBoardStorage.Add(motherboard);
 
         var computerCaseBuilder = new CaseBuilder();
         var listOfFormFactors = new List<FormFactor>() { new FormFactor("Micro-ATX") };
@@ -78,7 +70,7 @@ public class Tests
             .SetWidthOfVideocard(160)
             .SetFormFactors(listOfFormFactors)
             .Build();
-        _caseStorage.Add(computerCase);
+        _repository.ComputerCaseStorage.Add(computerCase);
 
         var graphicCardBuilder = new VideocardBuilder();
         Videocard videocard = graphicCardBuilder
@@ -90,11 +82,11 @@ public class Tests
             .SetPci(new Pcie("X16", 16))
             .SetEnergyConsumption(75)
             .Build();
-        _videocardStorage.Add(videocard);
+        _repository.VideoCardStorage.Add(videocard);
 
         var sockets = new List<Socket>() { new Socket("LGA 1200") };
         var cooler = new Cooler("ID-COOLING SE-903-XT", 100, 123, 65, 130, sockets);
-        _coolerStorage.Add(cooler);
+        _repository.CoolerStorage.Add(cooler);
 
         var ramBuilder = new RamBuilder();
         var profiles = new List<Profile>() { new Profile("Intel XMP", "XMP", 10, 1000, new List<int>() { 30, 50 }) };
@@ -107,98 +99,141 @@ public class Tests
             .SetJedecVoltage(new List<JedecAndVoltage>() { new JedecAndVoltage(10, 10) })
             .SetDDR(new Ddr("DDR4"))
             .Build();
-        _ramStorage.Add(ram);
+        _repository.RamStorage.Add(ram);
 
         var ssd = new Ssd("Apacer AS350 PANTHER", 512, 550, 10, null);
-        _diskStorage.Add(ssd);
+        _repository.HddStorage.Add(ssd);
 
         var powerUnit = new PowerUnit("AeroCool VX PLUS 500W", 500);
-        _powerUnitStorage.Add(powerUnit);
-
-        var computerBuilder = new ComputerBuilder();
-        Computer computer = computerBuilder
-            .SetName("Good pc")
-            .SetCase(computerCase)
-            .SetCooler(cooler)
-            .SetCpu(cpu)
-            .SetMotherboard(motherboard)
-            .SetRams(new List<Ram>() { ram, ram })
-            .SetDisks(new List<Hdd>() { ssd })
-            .SetVideocard(videocard)
-            .SetPowerUnit(powerUnit)
-            .Build();
-        _computerStorage.Add(computer);
+        _repository.PowerUnitStorage.Add(powerUnit);
     }
 
     [Fact]
     public void SuccessResultTest()
     {
-        Computer computer = _computerStorage.GetDetail("Good pc");
-        var computerValidator = new ComputerValidator();
+        var specification = new Specification(
+            "Intel Core i3-10100F",
+            "MSI PRO H510M-B",
+            new List<string>() { "ADATA XPG GAMMIX D20", "ADATA XPG GAMMIX D20" },
+            new List<string>() { "Apacer AS350 PANTHER" },
+            "AeroCool VX PLUS 500W",
+            null,
+            "MSI GeForce GTX 1630 VENTUS XS OC",
+            "AeroCool Bolt Mini",
+            "ID-COOLING SE-903-XT");
+        var computerBuilder = new ComputerBuilder(new ComputerValidator());
+        var computerBuilderDirector =
+            new ComputerBuilderDirector(specification, _repository, computerBuilder);
+        computerBuilderDirector.ComputerConstruct("Good Pc");
+        PcBuildResult pcBuildResult = computerBuilder.Build();
 
-        ValidatorResult result = computerValidator.Validate(computer);
-
-        Assert.IsType<ValidatorResult.SuccessResult>(result);
+        Assert.IsType<ValidatorResult.SuccessResult>(pcBuildResult.ValidatorResult);
     }
 
     [Fact]
     public void NotEnoughEnergyTest()
     {
-        var powerUnit = new PowerUnit("AeroCool VX PLUS 500W", 10);
-        ComputerBuilder computerBuilder = _computerStorage.GetDetail("Good pc").Direct();
-        computerBuilder.SetPowerUnit(powerUnit);
-        Computer computer = computerBuilder.Build();
-        var computerValidator = new ComputerValidator();
+        var powerUnit = new PowerUnit("AeroCool VX PLUS 10W", 10);
+        _repository.PowerUnitStorage.Add(powerUnit);
+        var specification = new Specification(
+            "Intel Core i3-10100F",
+            "MSI PRO H510M-B",
+            new List<string>() { "ADATA XPG GAMMIX D20", "ADATA XPG GAMMIX D20" },
+            new List<string>() { "Apacer AS350 PANTHER" },
+            "AeroCool VX PLUS 10W",
+            null,
+            "MSI GeForce GTX 1630 VENTUS XS OC",
+            "AeroCool Bolt Mini",
+            "ID-COOLING SE-903-XT");
+        var computerBuilder = new ComputerBuilder(new ComputerValidator());
+        var computerBuilderDirector =
+            new ComputerBuilderDirector(specification, _repository, computerBuilder);
+        computerBuilderDirector.ComputerConstruct("Good Pc");
 
-        ValidatorResult result = computerValidator.Validate(computer);
+        PcBuildResult pcBuildResult = computerBuilder.Build();
 
-        Assert.IsType<ValidatorResult.NoGuarantee>(result);
-        Assert.Equal("NoGuarantee { Comment = May be not enough energy\n }", result.ToString());
+        Assert.IsType<ValidatorResult.NoGuarantee>(pcBuildResult.ValidatorResult);
+        Assert.Equal("NoGuarantee { Comment = May be not enough energy\n }", pcBuildResult.ValidatorResult.ToString());
     }
 
     [Fact]
     public void NotGreatCoolerTest()
     {
-        CoolerBuilder coolerBuilder = _coolerStorage.GetDetail("ID-COOLING SE-903-XT").Direct().SetTdp(10);
+        CoolerBuilder coolerBuilder = _repository.CoolerStorage.GetDetail("ID-COOLING SE-903-XT").Direct().SetTdp(10)
+            .SetName("newCooler");
         Cooler newCooler = coolerBuilder.Build();
-        ComputerBuilder computerBuilder = _computerStorage.GetDetail("Good pc").Direct();
-        computerBuilder.SetCooler(newCooler);
-        Computer computer = computerBuilder.Build();
-        var computerValidator = new ComputerValidator();
+        _repository.CoolerStorage.Add(newCooler);
+        var specification = new Specification(
+            "Intel Core i3-10100F",
+            "MSI PRO H510M-B",
+            new List<string>() { "ADATA XPG GAMMIX D20", "ADATA XPG GAMMIX D20" },
+            new List<string>() { "Apacer AS350 PANTHER" },
+            "AeroCool VX PLUS 500W",
+            null,
+            "MSI GeForce GTX 1630 VENTUS XS OC",
+            "AeroCool Bolt Mini",
+            "newCooler");
+        var computerBuilder = new ComputerBuilder(new ComputerValidator());
+        var computerBuilderDirector =
+            new ComputerBuilderDirector(specification, _repository, computerBuilder);
+        computerBuilderDirector.ComputerConstruct("Good Pc");
 
-        ValidatorResult result = computerValidator.Validate(computer);
+        PcBuildResult pcBuildResult = computerBuilder.Build();
 
-        Assert.IsType<ValidatorResult.NoGuarantee>(result);
-        Assert.Equal("NoGuarantee { Comment = Tdp not enough\n }", result.ToString());
+        Assert.IsType<ValidatorResult.NoGuarantee>(pcBuildResult.ValidatorResult);
+        Assert.Equal("NoGuarantee { Comment = Tdp not enough\n }", pcBuildResult.ValidatorResult.ToString());
     }
 
     [Fact]
     public void WrongCpuInGoodPcTest()
     {
-        ComputerBuilder computerBuilder = _computerStorage.GetDetail("Good pc").Direct()
-            .SetCpu(_cpuStorage.GetDetail("AMD Ryzen"));
-        Computer computer = computerBuilder.Build();
-        var computerValidator = new ComputerValidator();
+        var specification = new Specification(
+            "AMD Ryzen",
+            "MSI PRO H510M-B",
+            new List<string>() { "ADATA XPG GAMMIX D20", "ADATA XPG GAMMIX D20" },
+            new List<string>() { "Apacer AS350 PANTHER" },
+            "AeroCool VX PLUS 500W",
+            null,
+            "MSI GeForce GTX 1630 VENTUS XS OC",
+            "AeroCool Bolt Mini",
+            "ID-COOLING SE-903-XT");
+        var computerBuilder = new ComputerBuilder(new ComputerValidator());
+        var computerBuilderDirector =
+            new ComputerBuilderDirector(specification, _repository, computerBuilder);
+        computerBuilderDirector.ComputerConstruct("Good Pc");
 
-        ValidatorResult result = computerValidator.Validate(computer);
-        Assert.IsType<ValidatorResult.Fault>(result);
+        PcBuildResult pcBuildResult = computerBuilder.Build();
+
+        Assert.IsType<ValidatorResult.Fault>(pcBuildResult.ValidatorResult);
         Assert.Equal(
             "Fault { Comment = Cpu and cooler have different sockets\n" +
             "Different cpu and motherboard sockets\n" +
             "Bios doesn't support cpu\n }",
-            result.ToString());
+            pcBuildResult.ValidatorResult.ToString());
     }
 
     [Fact]
     public void NoGraphicCardTest()
     {
-        ComputerBuilder computerBuilder = _computerStorage.GetDetail("Good pc").Direct().SetVideocard(null);
-        Computer computer = computerBuilder.Build();
-        var computerValidator = new ComputerValidator();
+        var specification = new Specification(
+            "Intel Core i3-10100F",
+            "MSI PRO H510M-B",
+            new List<string>() { "ADATA XPG GAMMIX D20", "ADATA XPG GAMMIX D20" },
+            new List<string>() { "Apacer AS350 PANTHER" },
+            "AeroCool VX PLUS 500W",
+            null,
+            null,
+            "AeroCool Bolt Mini",
+            "ID-COOLING SE-903-XT");
+        var computerBuilder = new ComputerBuilder(new ComputerValidator());
+        var computerBuilderDirector =
+            new ComputerBuilderDirector(specification, _repository, computerBuilder);
+        computerBuilderDirector.ComputerConstruct("Good Pc");
 
-        ValidatorResult result = computerValidator.Validate(computer);
+        PcBuildResult pcBuildResult = computerBuilder.Build();
 
-        Assert.IsType<ValidatorResult.Fault>(result);
-        Assert.Equal("Fault { Comment = No graphic card\n }", result.ToString());
+        Assert.IsType<ValidatorResult.Fault>(pcBuildResult.ValidatorResult);
+        Assert.Equal("Fault { Comment = No graphic card\n }", pcBuildResult.ValidatorResult.ToString());
+        Assert.Null(pcBuildResult.Pc);
     }
 }

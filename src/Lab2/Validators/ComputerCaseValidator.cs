@@ -6,7 +6,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardFolder;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
-public class ComputerCaseValidator : IValidators
+public class ComputerCaseValidator : IValidator
 {
     private readonly string _formfactorFault = "Case and motherboard have different form factors\n";
     private readonly string _videocardFault = "Videocard is too big for this case\n";

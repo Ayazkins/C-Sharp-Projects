@@ -6,7 +6,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.RAMFolder;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
-public class MotherboardAndRamValidator : IValidators
+public class MotherboardAndRamValidator : IValidator
 {
     private readonly string _slotsFault = "Not enough ram slots\n";
     private readonly string _formFactorFault = "Motherboard and ram have different form factors\n";

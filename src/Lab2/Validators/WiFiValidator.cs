@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
-public class WiFiValidator : IValidators
+public class WiFiValidator : IValidator
 {
     private readonly string _wiFiFault = "There are two WiFi adapters\n";
 

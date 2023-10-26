@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
-public class CpuAndVideocard : IValidators
+public class CpuAndVideocard : IValidator
 {
     private readonly string _noVideoFault = "No graphic card\n";
 
