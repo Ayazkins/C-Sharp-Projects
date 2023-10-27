@@ -1,7 +1,7 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.DIsks;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.RAMFolder;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.DIskComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.RamComponents;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
@@ -31,7 +31,7 @@ public class PowerUnitValidator : IValidator
 
         if (computer.WiFi != null) energyConsumption += computer.WiFi.EnergyConsumption;
         energyConsumption += computer.Cpu.EnergyConsumption;
-        foreach (Hdd disk in computer.HddDisks)
+        foreach (Disk disk in computer.Disks)
         {
             energyConsumption += disk.EnergyConsumption;
         }

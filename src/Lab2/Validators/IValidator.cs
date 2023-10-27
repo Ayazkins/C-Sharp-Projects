@@ -1,4 +1,4 @@
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerComponents;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 

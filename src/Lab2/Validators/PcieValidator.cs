@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.DIsks;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.PCIEFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardFolder;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.DIskComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardComponents;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
@@ -34,7 +33,7 @@ public class PcieValidator : IValidator
             return new ValidatorResult.Fault(_wifiFault);
         }
 
-        if (!CheckSsd(sorted, computer.HddDisks))
+        if (!CheckSsd(sorted, computer.Disks))
         {
             return new ValidatorResult.Fault(_ssdFault);
         }
@@ -42,7 +41,7 @@ public class PcieValidator : IValidator
         return new ValidatorResult.SuccessResult();
     }
 
-    private bool CheckVideoCard(IOrderedEnumerable<Entities.PCIEFolder.Pcie> sorted, Videocard videocard)
+    private bool CheckVideoCard(IOrderedEnumerable<Pcie> sorted, Videocard videocard)
     {
         foreach (Pcie pcie in sorted)
         {
@@ -70,18 +69,18 @@ public class PcieValidator : IValidator
         return false;
     }
 
-    private bool CheckSsd(IOrderedEnumerable<Pcie> sorted, IReadOnlyCollection<Hdd> ssds)
+    private bool CheckSsd(IOrderedEnumerable<Pcie> sorted, IReadOnlyCollection<Disk> ssds)
     {
-        var ssdDisk = new List<Hdd>();
-        foreach (Hdd disk in ssds)
+        var ssdDisk = new List<Disk>();
+        foreach (Disk disk in ssds)
         {
-            if (disk is Ssd)
+            if (disk.Pcie != null)
             {
                 ssdDisk.Add(disk);
             }
         }
 
-        foreach (Ssd ssd in ssdDisk)
+        foreach (Disk ssd in ssdDisk)
         {
             if (ssd.Pcie == null)
             {

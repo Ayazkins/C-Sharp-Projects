@@ -1,7 +1,7 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.CPUFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardFolder;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.CpuComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 

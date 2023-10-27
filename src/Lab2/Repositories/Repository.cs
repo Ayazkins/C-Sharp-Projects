@@ -25,14 +25,7 @@ public class Repository<T> : IRepository<T>
             throw new ArgumentNullException(nameof(detail));
         }
 
-        try
-        {
-            _dictionary.Add(detail.Name, detail);
-        }
-        catch (ArgumentException e)
-        {
-            Console.WriteLine(e.Message);
-        }
+        _dictionary.Add(detail.Name, detail);
     }
 
     public T GetDetail(string name)

@@ -1,8 +1,8 @@
 using System;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerCaseFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardFolder;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerCaseComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardComponents;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 

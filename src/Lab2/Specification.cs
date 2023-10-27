@@ -5,6 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2;
 public class Specification
 {
     public Specification(
+        string computerName,
         string cpuName,
         string motherboardName,
         IReadOnlyCollection<string> ramName,
@@ -15,6 +16,7 @@ public class Specification
         string computerCaseName,
         string coolerName)
     {
+        Name = computerName;
         CpuName = cpuName;
         MotherboardName = motherboardName;
         RamName = ramName;
@@ -27,6 +29,8 @@ public class Specification
     }
 
     public string CpuName { get; set; }
+
+    public string Name { get; set; }
     public string MotherboardName { get; set; }
     public IReadOnlyCollection<string> RamName { get; set; }
     public IReadOnlyCollection<string> DiskNames { get; set; }
@@ -35,4 +39,4 @@ public class Specification
     public string? VideocardName { get; set; }
     public string ComputerCaseName { get; set; }
     public string CoolerName { get; set; }
-}
+    }

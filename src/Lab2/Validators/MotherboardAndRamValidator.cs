@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardFolder;
-using Itmo.ObjectOrientedProgramming.Lab2.Entities.RAMFolder;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Entities.RamComponents;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
