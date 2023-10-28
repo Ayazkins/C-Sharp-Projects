@@ -5,7 +5,7 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.DIskComponents;
 
 public class Disk : DetailBase
 {
-    public Disk(string name, int capacity, int speed, int energyConsumption, Pcie? isSata = null)
+    public Disk(string name, int capacity, int speed, int energyConsumption, Pcie? pcie = null)
         : base(name)
     {
         if (capacity <= 0)
@@ -23,7 +23,7 @@ public class Disk : DetailBase
             throw new NotPositiveValue(nameof(energyConsumption));
         }
 
-        Pcie = isSata;
+        this.Pcie = pcie;
         Capacity = capacity;
         Speed = speed;
         EnergyConsumption = energyConsumption;

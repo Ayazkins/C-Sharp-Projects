@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Data;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerCaseComponents;
 
@@ -58,12 +58,12 @@ public class CaseBuilder
     public ComputerCase Build()
     {
         return new ComputerCase(
-            _name ?? throw new NoNullAllowedException(nameof(_name)),
+            _name ?? throw new ObjectShouldBeNotNull(nameof(_name)),
             _height,
             _width,
             _length,
             _lengthOfVideo,
             _widthOfVide,
-            _formFactors ?? throw new NoNullAllowedException(nameof(_formFactors)));
+            _formFactors ?? throw new ObjectShouldBeNotNull(nameof(_formFactors)));
     }
 }

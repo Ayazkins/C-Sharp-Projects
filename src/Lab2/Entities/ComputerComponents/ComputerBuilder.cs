@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerCaseComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.CpuComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.DIskComponents;
@@ -7,6 +6,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.PowerUnitComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.RamComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Exceptions;
 using Itmo.ObjectOrientedProgramming.Lab2.Validators;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.ComputerComponents;
@@ -92,23 +92,23 @@ public class ComputerBuilder
         return this;
     }
 
-    public Computer? Build()
+    public Computer Build()
     {
         var computer = new Computer(
-            _name ?? throw new NoNullAllowedException(nameof(_name)),
-            _motherboard ?? throw new NoNullAllowedException(nameof(_name)),
+            _name ?? throw new ObjectShouldBeNotNull(nameof(_name)),
+            _motherboard ?? throw new ObjectShouldBeNotNull(nameof(_name)),
             _videocard,
-            _cpu ?? throw new NoNullAllowedException(nameof(_cpu)),
-            _disks ?? throw new NoNullAllowedException(nameof(_disks)),
-            _powerUnit ?? throw new NoNullAllowedException(nameof(_powerUnit)),
-            _cooler ?? throw new NoNullAllowedException(nameof(_cooler)),
+            _cpu ?? throw new ObjectShouldBeNotNull(nameof(_cpu)),
+            _disks ?? throw new ObjectShouldBeNotNull(nameof(_disks)),
+            _powerUnit ?? throw new ObjectShouldBeNotNull(nameof(_powerUnit)),
+            _cooler ?? throw new ObjectShouldBeNotNull(nameof(_cooler)),
             _wiFi,
-            _rams ?? throw new NoNullAllowedException(nameof(_rams)),
-            _computerCase ?? throw new NoNullAllowedException(nameof(_computerCase)));
+            _rams ?? throw new ObjectShouldBeNotNull(nameof(_rams)),
+            _computerCase ?? throw new ObjectShouldBeNotNull(nameof(_computerCase)));
         ValidatorResult = _validator.Validate(computer);
         if (ValidatorResult is ValidatorResult.Fault)
         {
-            return null;
+            throw new FailedValidationException(nameof(computer));
         }
 
         return computer;

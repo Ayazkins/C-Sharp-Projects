@@ -1,5 +1,5 @@
-using System.Data;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardComponents;
 
@@ -58,8 +58,8 @@ public class VideocardBuilder
     public Videocard Build()
     {
         return new Videocard(
-            _name ?? throw new NoNullAllowedException(nameof(_name)),
-            _pcie ?? throw new NoNullAllowedException(nameof(_pcie)),
+            _name ?? throw new ObjectShouldBeNotNull(nameof(_name)),
+            _pcie ?? throw new ObjectShouldBeNotNull(nameof(_pcie)),
             _energyConsumption,
             _frequency,
             _memory,

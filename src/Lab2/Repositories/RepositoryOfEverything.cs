@@ -11,15 +11,15 @@ namespace Itmo.ObjectOrientedProgramming.Lab2.Repositories;
 public class RepositoryOfEverything
 {
     public RepositoryOfEverything(
-        Repository<Cpu> cpuStorage,
-        Repository<Motherboard> motherboardStorage,
-        Repository<PowerUnit> powerUnitStorage,
-        Repository<Videocard> videocardStorage,
-        Repository<Cooler> coolerStorage,
-        Repository<Ram> ramStorage,
-        Repository<Disk> diskStorage,
-        Repository<ComputerCase> computerCaseStorage,
-        Repository<WiFi> wifiStorage)
+        IRepository<Cpu> cpuStorage,
+        IRepository<Motherboard> motherboardStorage,
+        IRepository<PowerUnit> powerUnitStorage,
+        IRepository<Videocard> videocardStorage,
+        IRepository<Cooler> coolerStorage,
+        IRepository<Ram> ramStorage,
+        IRepository<Disk> diskStorage,
+        IRepository<ComputerCase> computerCaseStorage,
+        IRepository<WiFi> wifiStorage)
     {
         CpuStorage = cpuStorage;
         MotherBoardStorage = motherboardStorage;
@@ -32,14 +32,13 @@ public class RepositoryOfEverything
         WiFiStorage = wifiStorage;
     }
 
-    public IRepository<Cpu> CpuStorage { get; set; }
-    public IRepository<Motherboard> MotherBoardStorage { get; set; }
-    public IRepository<PowerUnit> PowerUnitStorage { get; set; }
-    public IRepository<Videocard> VideoCardStorage { get; set; }
-    public IRepository<Cooler> CoolerStorage { get; set; }
-    public IRepository<Ram> RamStorage { get; set; }
-    public IRepository<Disk> HddStorage { get; set; }
-    public IRepository<ComputerCase> ComputerCaseStorage { get; set; }
-
-    public IRepository<WiFi> WiFiStorage { get; set; }
+    public IRepository<Cpu> CpuStorage { get; }
+    public IRepository<Motherboard> MotherBoardStorage { get; }
+    public IRepository<PowerUnit> PowerUnitStorage { get; }
+    public IRepository<Videocard> VideoCardStorage { get; }
+    public IRepository<Cooler> CoolerStorage { get; }
+    public IRepository<Ram> RamStorage { get; }
+    public IRepository<Disk> HddStorage { get; }
+    public IRepository<ComputerCase> ComputerCaseStorage { get; }
+    public IRepository<WiFi> WiFiStorage { get; }
 }

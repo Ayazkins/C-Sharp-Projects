@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Data;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.RamComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.RamProfileComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.RAMFolder;
 
@@ -61,12 +61,12 @@ public class RamBuilder
     public Ram Build()
     {
         return new Ram(
-            _name ?? throw new NoNullAllowedException(nameof(_name)),
-            _ddr ?? throw new NoNullAllowedException(nameof(_ddr)),
-            _formFactor ?? throw new NoNullAllowedException(nameof(_formFactor)),
+            _name ?? throw new ObjectShouldBeNotNull(nameof(_name)),
+            _ddr ?? throw new ObjectShouldBeNotNull(nameof(_ddr)),
+            _formFactor ?? throw new ObjectShouldBeNotNull(nameof(_formFactor)),
             _energyConsumption,
             _memory,
-            _pairsOFJedecAndVoltage ?? throw new NoNullAllowedException(nameof(_pairsOFJedecAndVoltage)),
-            _profiles ?? throw new NoNullAllowedException(nameof(_profiles)));
+            _pairsOFJedecAndVoltage ?? throw new ObjectShouldBeNotNull(nameof(_pairsOFJedecAndVoltage)),
+            _profiles ?? throw new ObjectShouldBeNotNull(nameof(_profiles)));
     }
 }

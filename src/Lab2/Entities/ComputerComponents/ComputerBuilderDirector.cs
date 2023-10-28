@@ -19,7 +19,7 @@ public class ComputerBuilderDirector : IDirector
         _repositoryOfEverything = repositoryOfEverything;
     }
 
-    public Computer? ComputerConstruct(ComputerBuilder computerBuilder)
+    public Computer ComputerConstruct(ComputerBuilder computerBuilder)
     {
         if (computerBuilder == null)
         {

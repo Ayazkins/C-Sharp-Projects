@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.CpuComponents;
 
@@ -52,11 +52,11 @@ public class CoolerBuilder
     public Cooler Build()
     {
         return new Cooler(
-            _name ?? throw new ArgumentNullException(nameof(_name)),
+            _name ?? throw new ObjectShouldBeNotNull(nameof(_name)),
             _width,
             _height,
             _length,
             _tdp,
-            _supportedSockets ?? throw new ArgumentNullException(nameof(_supportedSockets)));
+            _supportedSockets ?? throw new ObjectShouldBeNotNull(nameof(_supportedSockets)));
     }
 }

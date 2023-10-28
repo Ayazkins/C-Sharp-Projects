@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab2.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.RamProfileComponents;
 
@@ -44,10 +44,10 @@ public class RamProfileBuilder
     public RamProfile Build()
     {
         return new RamProfile(
-            _name ?? throw new ArgumentNullException(nameof(_name)),
-            _type ?? throw new ArgumentNullException(nameof(_name)),
+            _name ?? throw new ObjectShouldBeNotNull(nameof(_name)),
+            _type ?? throw new ObjectShouldBeNotNull(nameof(_name)),
             _voltage,
             _frequency,
-            _timings ?? throw new ArgumentNullException(nameof(_timings)));
+            _timings ?? throw new ObjectShouldBeNotNull(nameof(_timings)));
     }
 }

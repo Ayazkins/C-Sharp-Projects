@@ -1,5 +1,5 @@
-using System.Data;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.CpuComponents;
 
@@ -65,10 +65,10 @@ public class CpuBuilder
     public Cpu Build()
     {
         return new Cpu(
-            _name ?? throw new NoNullAllowedException(nameof(_name)),
+            _name ?? throw new ObjectShouldBeNotNull(nameof(_name)),
             _coreFrequency,
             _cores,
-            _socket ?? throw new NoNullAllowedException(nameof(_socket)),
+            _socket ?? throw new ObjectShouldBeNotNull(nameof(_socket)),
             _videocard,
             _memoryFrequency,
             _tdp,

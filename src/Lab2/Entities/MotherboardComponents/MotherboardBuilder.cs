@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Data;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.BiosComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.RamComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Exceptions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab2.Entities.MotherboardComponents;
 
@@ -81,15 +81,15 @@ public class MotherboardBuilder
     public Motherboard Build()
     {
         return new Motherboard(
-            _name ?? throw new NoNullAllowedException(nameof(_name)),
-            _socket ?? throw new NoNullAllowedException(nameof(_socket)),
-            _pcies ?? throw new NoNullAllowedException(nameof(_pcies)),
+            _name ?? throw new ObjectShouldBeNotNull(nameof(_name)),
+            _socket ?? throw new ObjectShouldBeNotNull(nameof(_socket)),
+            _pcies ?? throw new ObjectShouldBeNotNull(nameof(_pcies)),
             _amountOfSata,
-            _bios ?? throw new NoNullAllowedException(nameof(_bios)),
-            _formFactor ?? throw new NoNullAllowedException(nameof(_formFactor)),
+            _bios ?? throw new ObjectShouldBeNotNull(nameof(_bios)),
+            _formFactor ?? throw new ObjectShouldBeNotNull(nameof(_formFactor)),
             _amountOfRam,
-            _ddrVersion ?? throw new NoNullAllowedException(nameof(_ddrVersion)),
-            _chipset ?? throw new NoNullAllowedException(nameof(_chipset)),
+            _ddrVersion ?? throw new ObjectShouldBeNotNull(nameof(_ddrVersion)),
+            _chipset ?? throw new ObjectShouldBeNotNull(nameof(_chipset)),
             _wifi);
     }
 }
