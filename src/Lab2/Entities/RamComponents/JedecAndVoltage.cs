@@ -6,7 +6,7 @@ public class JedecAndVoltage
 {
     public JedecAndVoltage(int jedec, int voltage)
     {
-        if (JEDEC <= 0)
+        if (jedec <= 0)
         {
             throw new NotPositiveValue(nameof(JEDEC));
         }

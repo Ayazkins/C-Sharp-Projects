@@ -10,6 +10,7 @@ using Itmo.ObjectOrientedProgramming.Lab2.Entities.RamComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.RAMFolder;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.RamProfileComponents;
 using Itmo.ObjectOrientedProgramming.Lab2.Entities.VideocardComponents;
+using Itmo.ObjectOrientedProgramming.Lab2.Exceptions;
 using Itmo.ObjectOrientedProgramming.Lab2.Repositories;
 using Itmo.ObjectOrientedProgramming.Lab2.Validators;
 using Xunit;
@@ -140,11 +141,10 @@ public class Tests
     {
         Specification specification = _defaultSpecification;
         var computerBuilder = new ComputerBuilder(new ComputerValidator());
-        Computer? computer = new ComputerBuilderDirector(specification, _repository)
+        new ComputerBuilderDirector(specification, _repository)
             .ComputerConstruct(computerBuilder);
 
         Assert.IsType<ValidatorResult.SuccessResult>(computerBuilder.ValidatorResult);
-        Assert.NotNull(computer);
     }
 
     [Fact]
@@ -155,11 +155,10 @@ public class Tests
         Specification specification = _defaultSpecification;
         specification.PowerUnitName = "AeroCool VX PLUS 10W";
         var computerBuilder = new ComputerBuilder(new ComputerValidator());
-        Computer? computer = new ComputerBuilderDirector(specification, _repository)
+        new ComputerBuilderDirector(specification, _repository)
             .ComputerConstruct(computerBuilder);
 
         Assert.IsType<ValidatorResult.NoGuarantee>(computerBuilder.ValidatorResult);
-        Assert.NotNull(computer);
     }
 
     [Fact]
@@ -172,11 +171,10 @@ public class Tests
         Specification specification = _defaultSpecification;
         specification.CoolerName = "newCooler";
         var computerBuilder = new ComputerBuilder(new ComputerValidator());
-        Computer? computer = new ComputerBuilderDirector(specification, _repository)
+        new ComputerBuilderDirector(specification, _repository)
             .ComputerConstruct(computerBuilder);
 
         Assert.IsType<ValidatorResult.NoGuarantee>(computerBuilder.ValidatorResult);
-        Assert.NotNull(computer);
     }
 
     [Fact]
@@ -185,11 +183,10 @@ public class Tests
         Specification specification = _defaultSpecification;
         _defaultSpecification.CpuName = "AMD Ryzen";
         var computerBuilder = new ComputerBuilder(new ComputerValidator());
-        Computer? computer = new ComputerBuilderDirector(specification, _repository)
-            .ComputerConstruct(computerBuilder);
+        Assert.Throws<FailedValidationException>(() => new ComputerBuilderDirector(specification, _repository)
+            .ComputerConstruct(computerBuilder));
 
         Assert.IsType<ValidatorResult.Fault>(computerBuilder.ValidatorResult);
-        Assert.Null(computer);
     }
 
     [Fact]
@@ -199,10 +196,9 @@ public class Tests
         _defaultSpecification.VideocardName = null;
 
         var computerBuilder = new ComputerBuilder(new ComputerValidator());
-        Computer? computer = new ComputerBuilderDirector(specification, _repository)
-            .ComputerConstruct(computerBuilder);
+        Assert.Throws<FailedValidationException>(() => new ComputerBuilderDirector(specification, _repository)
+            .ComputerConstruct(computerBuilder));
 
         Assert.IsType<ValidatorResult.Fault>(computerBuilder.ValidatorResult);
-        Assert.Null(computer);
     }
 }
