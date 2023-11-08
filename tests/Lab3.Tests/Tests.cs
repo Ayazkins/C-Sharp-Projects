@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 using Itmo.ObjectOrientedProgramming.Lab3.Exceptions;
@@ -9,7 +8,6 @@ using Itmo.ObjectOrientedProgramming.Lab3.Topics;
 using Itmo.ObjectOrientedProgramming.Lab3.Users;
 using Moq;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Tests;
 
