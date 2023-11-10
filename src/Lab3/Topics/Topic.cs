@@ -1,4 +1,5 @@
 using Itmo.ObjectOrientedProgramming.Lab3.Addressees;
+using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Topics;
 
@@ -10,7 +11,7 @@ public class Topic
         TopicAddressee = topicAddressee;
     }
 
-    private string Name { get; }
+    public string Name { get; }
     private IAddressee TopicAddressee { get; }
 
     public void TakeMessage(Message message)

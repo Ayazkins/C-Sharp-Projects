@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 using Itmo.ObjectOrientedProgramming.Lab3.Exceptions;
+using Itmo.ObjectOrientedProgramming.Lab3.Facades;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageReceiver.Users;
 using Itmo.ObjectOrientedProgramming.Lab3.MessageReceivers.Messengers;
 using Itmo.ObjectOrientedProgramming.Lab3.Messages;
@@ -15,26 +16,49 @@ public class Tests
 {
     private readonly Mock<IAddressee> _mockAddressee;
     private readonly Mock<ILogger> _mockLogger;
+    private readonly IFacade _facade;
+    private readonly User _user;
 
     public Tests()
     {
         _mockAddressee = new Mock<IAddressee>();
         _mockLogger = new Mock<ILogger>();
+        _facade = new Facade();
+        _user = new User("me");
+        IAddressee userAddressee = new UserAddressee(_user);
+        var topic = new Topic("user check", userAddressee);
+        _facade.Add(topic);
+        IAddressee proxy = new ProxyAddressee(userAddressee, new LevelOfImportance.SecondLevelOfImportance());
+        var levelOfImportanceTestTopic = new Topic("Level of importance", proxy);
+        _facade.Add(levelOfImportanceTestTopic);
+        var proxy2 = new LoggerAddOn(
+            new ProxyAddressee(
+                userAddressee,
+                new LevelOfImportance.ThirdLevelOfImportance()),
+            _mockLogger.Object);
+        var loggerTestTopic = new Topic("Logger", proxy2);
+        _facade.Add(loggerTestTopic);
+        var mockTelegram = new Mock<ITelegram>();
+        var messenger = new MessengerAddressee(new TelegramAdapter(mockTelegram.Object, "me"));
+        var proxy3 = new LoggerAddOn(
+            new ProxyAddressee(
+                messenger,
+                new LevelOfImportance.ThirdLevelOfImportance()),
+            _mockLogger.Object);
+        var messengerTestTopic = new Topic("Messenger", proxy3);
+        _facade.Add(messengerTestTopic);
     }
 
     [Fact]
     public void UserTakesMessageTest()
     {
-        var user = new User("me");
-        IAddressee userAddressee = new UserAddressee("user addressee", user);
-        var topic = new Topic("user check", userAddressee);
         var message = new Message("Test", "Hello", new LevelOfImportance.ThirdLevelOfImportance());
         var message2 = new Message("Test", "Hello", new LevelOfImportance.ThirdLevelOfImportance());
 
-        topic.TakeMessage(message);
-        topic.TakeMessage(message2);
+        _facade.SendMessage("user check", message);
+        _facade.SendMessage("user check", message2);
 
-        IReadOnlyCollection<UserMessage> userMessages = user.CopyOfMessages();
+        IReadOnlyCollection<UserMessage> userMessages = _user.CopyOfMessages();
         foreach (UserMessage userMessage in userMessages)
         {
             Assert.False(userMessage.IsRead);
@@ -44,18 +68,15 @@ public class Tests
     [Fact]
     public void UserReadMessageTest()
     {
-        var user = new User("me");
-        IAddressee userAddressee = new UserAddressee("user addressee", user);
-        var topic = new Topic("user check", userAddressee);
         var message = new Message("Test", "Hello", new LevelOfImportance.ThirdLevelOfImportance());
         var message2 = new Message("Test", "Hello", new LevelOfImportance.ThirdLevelOfImportance());
+        _facade.SendMessage("user check", message);
+        _facade.SendMessage("user check", message2);
 
-        topic.TakeMessage(message);
-        topic.TakeMessage(message2);
-        user.ReadMessage(0);
+        _user.ReadMessage(0);
 
-        IReadOnlyCollection<UserMessage> userMessages = user.CopyOfMessages();
-        IEnumerator<UserMessage> iterator = userMessages.GetEnumerator();
+        IReadOnlyCollection<UserMessage> userMessages = _user.CopyOfMessages();
+        using IEnumerator<UserMessage> iterator = userMessages.GetEnumerator();
         iterator.MoveNext();
         Assert.True(iterator.Current.IsRead);
         iterator.MoveNext();
@@ -65,29 +86,22 @@ public class Tests
     [Fact]
     public void UserReadTwiceMessageTest()
     {
-        var user = new User("me");
-        IAddressee userAddressee = new UserAddressee("user addressee", user);
-        var topic = new Topic("user check", userAddressee);
         var message = new Message("Test", "Hello", new LevelOfImportance.ThirdLevelOfImportance());
         var message2 = new Message("Test", "Hello", new LevelOfImportance.ThirdLevelOfImportance());
 
-        topic.TakeMessage(message);
-        topic.TakeMessage(message2);
-        user.ReadMessage(0);
+        _facade.SendMessage("user check", message);
+        _facade.SendMessage("user check", message2);
+        _user.ReadMessage(0);
 
-        Assert.Throws<MessageIsReadAlready>(() => user.ReadMessage(0));
+        Assert.Throws<MessageIsReadAlreadyException>(() => _user.ReadMessage(0));
     }
 
     [Fact]
     public void LevelOfImportanceTest()
     {
-        var user = new User("me");
-        IAddressee userAddressee = new UserAddressee("user addressee", user);
-        IAddressee proxy = new ProxyAddressee(userAddressee, new LevelOfImportance.SecondLevelOfImportance());
-        var topic = new Topic("user check", proxy);
         var message = new Message("Test", "Hello", new LevelOfImportance.ThirdLevelOfImportance());
 
-        topic.TakeMessage(message);
+        _facade.SendMessage("Level of importance", message);
 
         _mockAddressee.Verify(a => a.TakeMessage(message), Times.Never);
     }
@@ -95,28 +109,20 @@ public class Tests
     [Fact]
     public void LoggerTest()
     {
-        var user = new User("me");
-        IAddressee userAddressee = new UserAddressee("user addressee", user);
-        var proxy = new ProxyAddressee(userAddressee, new LevelOfImportance.ThirdLevelOfImportance(), _mockLogger.Object);
-        var topic = new Topic("user check", proxy);
         var message = new Message("Test", "Hello", new LevelOfImportance.FirstLevelOfImportance());
 
-        topic.TakeMessage(message);
+        _facade.SendMessage("Logger", message);
 
-        _mockLogger.Verify(a => a.Info(proxy.Name, message), Times.Once);
+        _mockLogger.Verify(a => a.Info(message), Times.Once);
     }
 
     [Fact]
     public void MessengerTest()
     {
-        var mockTelegram = new Mock<ITelegram>();
-        var messenger = new TelegramAddressee("Telegram", "1", mockTelegram.Object);
-        var proxy = new ProxyAddressee(messenger, new LevelOfImportance.ThirdLevelOfImportance(), _mockLogger.Object);
-        var topic = new Topic("user check", proxy);
         var message = new Message("Test", "Hello", new LevelOfImportance.FirstLevelOfImportance());
 
-        topic.TakeMessage(message);
+        _facade.SendMessage("Messenger", message);
 
-        _mockLogger.Verify(a => a.Info(proxy.Name, message), Times.Once);
+        _mockLogger.Verify(a => a.Info(message), Times.Once);
     }
 }

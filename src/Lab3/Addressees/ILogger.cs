@@ -1,6 +1,8 @@
-namespace Itmo.ObjectOrientedProgramming.Lab3;
+using Itmo.ObjectOrientedProgramming.Lab3.Messages;
+
+namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 
 public interface ILogger
 {
-    void Info(string addresseeName, Message message);
+    void Info(Message message);
 }

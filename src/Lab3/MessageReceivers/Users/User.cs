@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Itmo.ObjectOrientedProgramming.Lab3.Exceptions;
+using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 using Itmo.ObjectOrientedProgramming.Lab3.Users;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.MessageReceiver.Users;
@@ -25,7 +26,7 @@ public class User : IUser
     {
         if (!_messages[index].ReadMessage())
         {
-            throw new MessageIsReadAlready();
+            throw new MessageIsReadAlreadyException();
         }
     }
 

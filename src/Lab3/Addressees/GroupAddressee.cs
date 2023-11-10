@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Itmo.ObjectOrientedProgramming.Lab3.Messages;
 
 namespace Itmo.ObjectOrientedProgramming.Lab3.Addressees;
 
@@ -6,13 +7,10 @@ public class GroupAddressee : IAddressee
 {
     private readonly IReadOnlyCollection<IAddressee> _addressees;
 
-    public GroupAddressee(IReadOnlyCollection<IAddressee> addressees, string name)
+    public GroupAddressee(IReadOnlyCollection<IAddressee> addressees)
     {
-        Name = name;
         _addressees = addressees;
     }
-
-    public string Name { get; }
 
     public void TakeMessage(Message message)
     {
