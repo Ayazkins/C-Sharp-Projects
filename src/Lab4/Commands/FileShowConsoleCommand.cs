@@ -7,10 +7,12 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Commands;
 public class FileShowConsoleCommand : ICommand
 {
     private readonly string _path;
+    private readonly string _mode;
 
-    public FileShowConsoleCommand(string path)
+    public FileShowConsoleCommand(string path, string mode)
     {
         _path = path;
+        _mode = mode;
     }
 
     public ITree? Execute(ITree? tree)
@@ -20,7 +22,10 @@ public class FileShowConsoleCommand : ICommand
             throw new ArgumentException("Do connect before", nameof(tree));
         }
 
-        new ConsoleRenderer().RenderMessage(tree.GetFile(_path).GetFileData());
+        if (_mode == "local")
+        {
+            new ConsoleRenderer().RenderMessage(tree.GetFile(_path).GetFileData());
+        }
 
         return tree;
     }

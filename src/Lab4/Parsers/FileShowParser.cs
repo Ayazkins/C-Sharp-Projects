@@ -3,7 +3,7 @@ using Itmo.ObjectOrientedProgramming.Lab4.Commands;
 
 namespace Itmo.ObjectOrientedProgramming.Lab4.Parsers;
 
-public class FileShowConcoleParser : IParser
+public class FileShowParser : IParser
 {
     public IParser? Successor { get; set; }
 
@@ -17,10 +17,9 @@ public class FileShowConcoleParser : IParser
         if (args.Length == 5 &&
             string.Equals(args[0], "file", StringComparison.OrdinalIgnoreCase) &&
             string.Equals(args[1], "show", StringComparison.OrdinalIgnoreCase) &&
-            string.Equals(args[3], "-m", StringComparison.OrdinalIgnoreCase) &&
-            string.Equals(args[4], "console", StringComparison.OrdinalIgnoreCase))
+            string.Equals(args[3], "-m", StringComparison.OrdinalIgnoreCase))
         {
-            return new FileShowConsoleCommand(args[2]);
+            return new FileShowConsoleCommand(args[2], args[4]);
         }
 
         if (Successor == null)

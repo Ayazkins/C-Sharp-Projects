@@ -20,7 +20,7 @@ public class Tests
         var disconnectParser = new DisconnectParser();
         var treeGotoParser = new TreeGotoParser();
         var treeListParser = new TreeListParser();
-        var fileShowParser = new FileShowConcoleParser();
+        var fileShowParser = new FileShowParser();
         var fileMoveParser = new FileMoveParser();
         var fileCopyParser = new FileCopyParser();
         var fileDeleteParser = new FileDeleteParser();
