@@ -7,12 +7,16 @@ public class ConsoleRenderer : IRenderer
 {
     public void RenderTree(ITree tree, string folder, string file, string space)
     {
-        RenderMessage(new Visitor(folder, file, space).Visit(tree));
+        IVisitor visitor = new Visitor(folder, file, space);
+        visitor.Visit(tree);
+        RenderMessage(visitor.Result);
     }
 
     public void RenderTree(ITree tree)
     {
-        RenderMessage(new Visitor().Visit(tree));
+        IVisitor visitor = new Visitor();
+        visitor.Visit(tree);
+        RenderMessage(visitor.Result);
     }
 
     public void RenderMessage(string message)

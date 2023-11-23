@@ -30,14 +30,14 @@ public class Visitor : IVisitor
 
     public string Result { get; set; }
 
-    public string Visit(ITree tree)
+    public void Visit(ITree tree)
     {
         if (tree == null)
         {
             throw new ArgumentNullException(nameof(tree));
         }
 
-        return ShowRec(tree.Root, _folderSymbol, _fileSymbol, _spaceSymbol, 0, tree.Depth, new StringBuilder())
+        Result = ShowRec(tree.Root, _folderSymbol, _fileSymbol, _spaceSymbol, 0, tree.Depth, new StringBuilder())
             .ToString();
     }
 

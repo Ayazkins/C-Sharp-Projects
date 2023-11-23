@@ -5,5 +5,5 @@ namespace Itmo.ObjectOrientedProgramming.Lab4;
 public interface IVisitor
 {
     string Result { get; }
-    string Visit(ITree tree);
+    void Visit(ITree tree);
 }
