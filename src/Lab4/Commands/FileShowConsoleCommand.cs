@@ -22,9 +22,9 @@ public class FileShowConsoleCommand : ICommand
             throw new ArgumentException("Do connect before", nameof(tree));
         }
 
-        if (_mode == "local")
+        if (_mode == "console")
         {
-            new ConsoleRenderer().RenderMessage(tree.GetFile(_path).GetFileData());
+            new ConsoleRenderer(new Visitor()).RenderMessage(tree.GetFile(_path).GetFileData());
         }
 
         return tree;

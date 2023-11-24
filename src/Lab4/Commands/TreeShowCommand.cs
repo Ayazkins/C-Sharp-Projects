@@ -24,7 +24,7 @@ public class TreeShowCommand : ICommand
             throw new ArgumentException("Do connect before", nameof(tree));
         }
 
-        new ConsoleRenderer().RenderTree(tree, _folder, _file, _space);
+        new ConsoleRenderer(new Visitor()).RenderTree(tree, _folder, _file, _space);
         return tree;
     }
 }

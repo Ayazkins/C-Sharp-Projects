@@ -21,7 +21,7 @@ public class TreeListCommand : ICommand
         }
 
         tree.Depth = _depth;
-        new ConsoleRenderer().RenderTree(tree);
+        new ConsoleRenderer(new Visitor()).RenderTree(tree);
         return tree;
     }
 }

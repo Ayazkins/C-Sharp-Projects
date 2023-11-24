@@ -5,18 +5,23 @@ namespace Itmo.ObjectOrientedProgramming.Lab4.Renderers;
 
 public class ConsoleRenderer : IRenderer
 {
+    public ConsoleRenderer(IVisitor visitor)
+    {
+        Visitor = visitor;
+    }
+
+    public IVisitor Visitor { get; }
+
     public void RenderTree(ITree tree, string folder, string file, string space)
     {
-        IVisitor visitor = new Visitor(folder, file, space);
-        visitor.Visit(tree);
-        RenderMessage(visitor.Result);
+        Visitor.Visit(tree, folder, file, space);
+        RenderMessage(Visitor.Result);
     }
 
     public void RenderTree(ITree tree)
     {
-        IVisitor visitor = new Visitor();
-        visitor.Visit(tree);
-        RenderMessage(visitor.Result);
+        Visitor.Visit(tree, "*", ".", "  ");
+        RenderMessage(Visitor.Result);
     }
 
     public void RenderMessage(string message)

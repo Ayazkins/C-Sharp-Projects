@@ -8,36 +8,21 @@ namespace Itmo.ObjectOrientedProgramming.Lab4;
 
 public class Visitor : IVisitor
 {
-    private readonly string _folderSymbol;
-    private readonly string _fileSymbol;
-    private readonly string _spaceSymbol;
-
     public Visitor()
     {
-        _folderSymbol = "*";
-        _fileSymbol = ".";
-        _spaceSymbol = "   ";
-        Result = string.Empty;
-    }
-
-    public Visitor(string folder, string file, string space)
-    {
-        _folderSymbol = folder;
-        _fileSymbol = file;
-        _spaceSymbol = space;
         Result = string.Empty;
     }
 
     public string Result { get; set; }
 
-    public void Visit(ITree tree)
+    public void Visit(ITree tree, string folderSymbol, string fileSymbol, string spaceSymbol)
     {
         if (tree == null)
         {
             throw new ArgumentNullException(nameof(tree));
         }
 
-        Result = ShowRec(tree.Root, _folderSymbol, _fileSymbol, _spaceSymbol, 0, tree.Depth, new StringBuilder())
+        Result = ShowRec(tree.Root, folderSymbol, fileSymbol, spaceSymbol, 0, tree.Depth, new StringBuilder())
             .ToString();
     }
 
